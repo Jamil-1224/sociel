@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Find user by email
-    const user = await User.findOne({ email: email.toLowerCase() });
+    // Find user by email (explicitly select password field)
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
     if (!user) {
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },
